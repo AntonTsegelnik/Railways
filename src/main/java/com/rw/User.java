@@ -1,11 +1,21 @@
 package com.rw;
 
 public class User {
+
     private String username;
     private String password;
     private int role;
 
-    //
+    public User(){
+    this.role = 1;
+    }
+    public User(String username, String password, int role){
+
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
 
     public String getUsername() {
         return username;

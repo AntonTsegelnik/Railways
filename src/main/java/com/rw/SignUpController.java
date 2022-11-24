@@ -29,12 +29,19 @@ public class SignUpController {
 
     @FXML
     void initialize() {
-        DatabaseHandler dbHandler = new DatabaseHandler();
-
-        signUpButton.setOnAction(event -> {
-            dbHandler.signUpUser(login_field.getText(), password_field.getText(), 1);
+        signUpButton.setOnAction(actionEvent -> {
+            signUpNewUser();
         });
 
+    }
+
+    private void signUpNewUser() {
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        String username= login_field.getText();
+        String password= password_field.getText();
+        int role= 1;
+        User user = new User(username,password,role);
+        dbHandler.signUpUser(user);
     }
 
 }
