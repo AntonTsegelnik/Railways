@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class SignUpController {
+public class SignUpController implements IDirectToWindow {
 
     @FXML
     private ResourceBundle resources;
@@ -31,6 +31,7 @@ public class SignUpController {
     void initialize() {
         signUpButton.setOnAction(actionEvent -> {
             signUpNewUser();
+            openNewScene("view/SignInView.fxml", signUpButton);
         });
 
     }
