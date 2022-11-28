@@ -3,6 +3,7 @@ package com.rw;
 
 
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,27 +39,21 @@ public class SignInController implements IDirectToWindow {
     @FXML
     private PasswordField password_field;
 
-    @FXML
+    private Server server;
 
-
-
-
-    
-    void openHomeScene(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignUp.fxml"));
-        Parent root = loader.load();
-        SignUpController someApplicationController = loader.getController();
-
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Железная дорога");
-        stage.show();
-
-    }
 
 
     @FXML
     void initialize() {
+//        try{
+//            server = new Server(new ServerSocket(1234));
+//        } catch (IOException e){
+//            e.printStackTrace();
+//            System.out.println("error creating server. ");
+//        }
+
+
+
         loginSignUpButton.setOnAction(actionEvent -> {
             loginSignUpButton.getScene().getWindow().hide();
             try {
@@ -80,7 +75,17 @@ public class SignInController implements IDirectToWindow {
         });
     }
 
+    void openHomeScene(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignUp.fxml"));
+        Parent root = loader.load();
+        SignUpController someApplicationController = loader.getController();
 
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Железная дорога");
+        stage.show();
+
+    }
 
 //  @FXML
 //  void initialize() {
