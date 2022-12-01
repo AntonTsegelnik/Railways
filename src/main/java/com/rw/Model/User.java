@@ -1,4 +1,4 @@
-package com.rw;
+package com.rw.Model;
 
 public class User {
 

@@ -1,4 +1,9 @@
 package com.rw;
+import com.rw.Model.Configs;
+import com.rw.Model.Const;
+import com.rw.Model.Flights;
+import com.rw.Model.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +22,22 @@ public class DatabaseHandler extends Configs {
             dbUser, dbPass);
     return dbConnection;
     }
+    public ResultSet getFlight(Flights flights){
+        ResultSet resSet = null;
+        String select = "SELECT * FROM " + Const.FLIGHTS_TABLE + " WHERE " +
+                Const.FLIGHT_DATE +"='%s' AND ".formatted(flights.getDate())  + Const.RAIL_TO +"='%s' AND ".formatted(flights.getWhereTo()) +
+                Const.RAIL_FROM + "='%s'".formatted(flights.getWhere());
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+
+            resSet = prSt.executeQuery(select);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return resSet;
+        }
 
     public void signUpUser(User user ){
         String insert = "INSERT INTO " + Const.USER_TABLE + "(" +

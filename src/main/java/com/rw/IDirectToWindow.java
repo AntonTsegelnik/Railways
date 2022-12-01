@@ -9,9 +9,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public interface IDirectToWindow {
-     default void openNewScene(String window, Button button){
+     default void openNewScene(String window){
 
-        button.getScene().getWindow().hide();
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(window));

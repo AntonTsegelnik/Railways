@@ -1,4 +1,4 @@
-package com.rw;
+package com.rw.Model;
 
 public class Configs {
     protected String dbHost = "localhost";
@@ -6,4 +6,6 @@ public class Configs {
     protected String dbUser = "root";
     protected String dbPass = "qwerty";
     protected String dbName = "railways";
+
+
 }

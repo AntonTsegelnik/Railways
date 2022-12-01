@@ -1,6 +1,6 @@
 package com.rw;
 
-import javafx.event.ActionEvent;
+import com.rw.Model.User;
 
 
 import java.net.URL;
@@ -30,12 +30,16 @@ public class SignUpController implements IDirectToWindow {
     @FXML
     void initialize() {
         signUpButton.setOnAction(actionEvent -> {
-            signUpNewUser();
-            openNewScene("view/SignInView.fxml", signUpButton);
+          //  signUpNewUser();
+            SocketConnection connection = new SocketConnection();
+           var a=  connection.register(login_field.getText(),password_field.getText(), 1);
+            System.out.println("signUoController" + a);
+
+
+            signUpButton.getScene().getWindow().hide();
+            openNewScene("view/SignInView.fxml");
         });
-
     }
-
     private void signUpNewUser() {
         DatabaseHandler dbHandler = new DatabaseHandler();
         String username= login_field.getText();
