@@ -2,10 +2,13 @@ package com.rw;
 
 import java.net.URL;
 import java.sql.ResultSet;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import com.rw.Model.Flights;
+import com.rw.Model.FlightsRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -33,18 +36,23 @@ public class FindTicketController {
 
     @FXML
     void initialize() {
-        find_button.setOnAction(actionEvent->{
+        find_button.setOnAction(actionEvent -> {
+            //init
             String where = where_field.getText().trim();
             String whereTo = where_to_field.getText().trim();
-            Date date = choose_data.getValue().get;
+            LocalDate localDate = choose_data.getValue();
+            Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+            Date date = Date.from(instant);
+
+            SocketConnection connection = new SocketConnection();
 
 
             DatabaseHandler dbHandler = new DatabaseHandler();
-            Flights flights = new Flights(where,whereTo,date);
+            FlightsRequest flightsRequest = new FlightsRequest(where, whereTo, date);
 
-            ResultSet result = dbHandler.getFlight(flights);
+            ResultSet result = dbHandler.getFlight(flightsRequest);
 
-            System.out.println(result);
+
 
         });
 

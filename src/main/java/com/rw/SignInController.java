@@ -69,12 +69,17 @@ public class SignInController implements IDirectToWindow {
             String loginPassword = password_field.getText().trim();
 
             var connection = new SocketConnection();
-            System.out.println(connection.authorize(loginText, loginPassword));
-
+           var result =  connection.authorize(loginText, loginPassword);
+           if(result.equals("OK")) {
+               authSignInButton.getScene().getWindow().hide();
+               openNewScene("view/FindTicket.fxml");
+           }
+           else {
+               System.out.println("Error");
+           }
 //        authSignInButton.setOnAction(ActionEvent -> {
 //            String loginText = login_field.getText().trim();
 //            String loginPassword = password_field.getText().trim();
-//            authSignInButton.getScene().getWindow().hide();
 //           // curl -X POST -H "Content-Type: application/json" -d '{"title": "My Post1", "body": "post content", "userId": 9}' https://dummyjson.com/posts/add
 //
 //

@@ -33,7 +33,7 @@ public class SignUpController implements IDirectToWindow {
           //  signUpNewUser();
             SocketConnection connection = new SocketConnection();
            var a=  connection.register(login_field.getText(),password_field.getText(), 1);
-            System.out.println("signUoController" + a);
+            System.out.println(a);
 
 
             signUpButton.getScene().getWindow().hide();

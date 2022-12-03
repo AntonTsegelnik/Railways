@@ -1,14 +1,12 @@
 package com.rw;
 import com.rw.Model.Configs;
 import com.rw.Model.Const;
-import com.rw.Model.Flights;
+import com.rw.Model.FlightsRequest;
 import com.rw.Model.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+
 public class DatabaseHandler extends Configs {
     Connection dbConnection;
 
@@ -22,15 +20,24 @@ public class DatabaseHandler extends Configs {
             dbUser, dbPass);
     return dbConnection;
     }
-    public ResultSet getFlight(Flights flights){
+    public ResultSet getFlight(FlightsRequest flightsRequest){
         ResultSet resSet = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String formDate = formatter.format(flightsRequest.Date);
+
         String select = "SELECT * FROM " + Const.FLIGHTS_TABLE + " WHERE " +
-                Const.FLIGHT_DATE +"='%s' AND ".formatted(flights.getDate())  + Const.RAIL_TO +"='%s' AND ".formatted(flights.getWhereTo()) +
-                Const.RAIL_FROM + "='%s'".formatted(flights.getWhere());
+                Const.FLIGHT_DATE +"='%s' AND ".formatted(formDate)  + Const.RAIL_TO +"='%s' AND ".formatted(flightsRequest.getWhereTo()) +
+                Const.RAIL_FROM + "='%s'".formatted(flightsRequest.getWhere());
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
 
             resSet = prSt.executeQuery(select);
+            while (resSet.next()) {
+                String date   = resSet.getString(Const.FLIGHT_DATE);
+                String from = resSet.getString( Const.RAIL_FROM);
+                String to = resSet.getString(Const.RAIL_TO);
+                System.out.println(date + "\t" + from + "\t" + to);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
