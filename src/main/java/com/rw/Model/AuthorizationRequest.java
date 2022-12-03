@@ -1,9 +1,7 @@
 package com.rw.Model;
 
-public class RegistrationRequest extends ClientRequest{
-    public int role;
+public class AuthorizationRequest extends ClientRequest {
     public String username;
     public String password;
-
 
 }

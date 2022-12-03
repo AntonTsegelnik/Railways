@@ -40,17 +40,16 @@ public class FindTicketController {
             //init
             String where = where_field.getText().trim();
             String whereTo = where_to_field.getText().trim();
-            LocalDate localDate = choose_data.getValue();
-            Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-            Date date = Date.from(instant);
+            LocalDate date = choose_data.getValue();
+
 
             SocketConnection connection = new SocketConnection();
+            connection.findTickets(date,where,whereTo);
 
-
-            DatabaseHandler dbHandler = new DatabaseHandler();
-            FlightsRequest flightsRequest = new FlightsRequest(where, whereTo, date);
-
-            ResultSet result = dbHandler.getFlight(flightsRequest);
+//            DatabaseHandler dbHandler = new DatabaseHandler();
+//            FlightsRequest flightsRequest = new FlightsRequest(where, whereTo, date);
+//
+//            ResultSet result = dbHandler.getFlight(flightsRequest);
 
 
 

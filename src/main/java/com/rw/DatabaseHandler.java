@@ -22,11 +22,11 @@ public class DatabaseHandler extends Configs {
     }
     public ResultSet getFlight(FlightsRequest flightsRequest){
         ResultSet resSet = null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String formDate = formatter.format(flightsRequest.Date);
+       // SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+       // String formDate = formatter.format(flightsRequest.Date);
 
         String select = "SELECT * FROM " + Const.FLIGHTS_TABLE + " WHERE " +
-                Const.FLIGHT_DATE +"='%s' AND ".formatted(formDate)  + Const.RAIL_TO +"='%s' AND ".formatted(flightsRequest.getWhereTo()) +
+                Const.FLIGHT_DATE +"='%s' AND ".formatted(flightsRequest.Date)  + Const.RAIL_TO +"='%s' AND ".formatted(flightsRequest.getWhereTo()) +
                 Const.RAIL_FROM + "='%s'".formatted(flightsRequest.getWhere());
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);

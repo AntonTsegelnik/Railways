@@ -1,13 +1,12 @@
 package com.rw;
 
-import com.rw.Model.ClientRequest;
-import com.rw.Model.FlightsRequest;
-import com.rw.Model.RegistrationRequest;
-import com.rw.Model.ServerResponse;
+import com.rw.Model.*;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class SocketConnection {
@@ -23,13 +22,14 @@ public class SocketConnection {
             System.out.println();
 
 
-            ClientRequest obj = new ClientRequest();
+            AuthorizationRequest obj = new AuthorizationRequest();
             obj.username = username;
             obj.password = password;
             obj.requestType = "authorization";
 
 
 // пишем данные с консоли в канал сокета для сервера
+
 
             oos.writeObject(obj);
             oos.flush();
@@ -113,7 +113,7 @@ public class SocketConnection {
 
 
     }
-    public String findTickets(Date date, String where, String whereTo) {
+    public String findTickets(LocalDate date, String where, String whereTo) {
         String response = "";
         String result = "";
         try (Socket socket = new Socket("localhost", 3345);
@@ -143,9 +143,14 @@ public class SocketConnection {
 
 // если успел забираем ответ из канала сервера в сокете и сохраняемеё в ois переменную,  печатаем на консоль
             System.out.println("reading...");
-            ServerResponse serverResponse = (ServerResponse) ois.readObject();
+            var serverFlightsResponses = (ArrayList<ServerFlightsResponse>) ois.readObject();
 
-            result = serverResponse.body;
+            for (var item: serverFlightsResponses
+                 ) {
+                System.out.println(item.Date);
+                System.out.println(item.Where);
+                System.out.println(item.WhereTo);
+            }
 
             System.out.println("Closing connections & channels on clentSide - DONE.");
 
