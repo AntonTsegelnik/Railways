@@ -1,9 +1,12 @@
 package com.rw;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import com.rw.Model.Configs;
+import com.rw.Model.Const;
+import com.rw.Model.FlightsRequest;
+import com.rw.Model.User;
+
+import java.sql.*;
+import java.text.SimpleDateFormat;
+
 public class DatabaseHandler extends Configs {
     Connection dbConnection;
 
@@ -17,6 +20,31 @@ public class DatabaseHandler extends Configs {
             dbUser, dbPass);
     return dbConnection;
     }
+    public ResultSet getFlight(FlightsRequest flightsRequest){
+        ResultSet resSet = null;
+       // SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+       // String formDate = formatter.format(flightsRequest.Date);
+
+        String select = "SELECT * FROM " + Const.FLIGHTS_TABLE + " WHERE " +
+                Const.FLIGHT_DATE +"='%s' AND ".formatted(flightsRequest.Date)  + Const.RAIL_TO +"='%s' AND ".formatted(flightsRequest.getWhereTo()) +
+                Const.RAIL_FROM + "='%s'".formatted(flightsRequest.getWhere());
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+
+            resSet = prSt.executeQuery(select);
+            while (resSet.next()) {
+                String date   = resSet.getString(Const.FLIGHT_DATE);
+                String from = resSet.getString( Const.RAIL_FROM);
+                String to = resSet.getString(Const.RAIL_TO);
+                System.out.println(date + "\t" + from + "\t" + to);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return resSet;
+        }
 
     public void signUpUser(User user ){
         String insert = "INSERT INTO " + Const.USER_TABLE + "(" +

@@ -2,13 +2,14 @@ package com.rw;
 
 
 
-import java.io.IOException;
-import java.net.ServerSocket;
+import java.io.*;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
+import com.rw.Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,13 +68,28 @@ public class SignInController implements IDirectToWindow {
             String loginText = login_field.getText().trim();
             String loginPassword = password_field.getText().trim();
 
-            if (!loginText.equals("") && !loginPassword.equals("")) {
-                loginUser(loginText, loginPassword);
-            } else
-                System.out.println("Login and password is empty");
-
-        });
-    }
+            var connection = new SocketConnection();
+           var result =  connection.authorize(loginText, loginPassword);
+           if(result.equals("OK")) {
+               authSignInButton.getScene().getWindow().hide();
+               openNewScene("view/FindTicket.fxml");
+           }
+           else {
+               System.out.println("Error");
+           }
+//        authSignInButton.setOnAction(ActionEvent -> {
+//            String loginText = login_field.getText().trim();
+//            String loginPassword = password_field.getText().trim();
+//           // curl -X POST -H "Content-Type: application/json" -d '{"title": "My Post1", "body": "post content", "userId": 9}' https://dummyjson.com/posts/add
+//
+//
+//            if (!loginText.equals("") && !loginPassword.equals("")) {
+//                loginUser(loginText, loginPassword);
+//            } else
+//                System.out.println("Login and password is empty");
+//
+      });
+    };
 
     void openHomeScene(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignUp.fxml"));
@@ -85,41 +101,17 @@ public class SignInController implements IDirectToWindow {
         stage.setTitle("Железная дорога");
         stage.show();
 
+
     }
 
-//  @FXML
-//  void initialize() {
-//
-//
-//
-//
-//
-//
-//
-//
-//      authSignInButton.setOnAction(ActionEvent -> {
-//          String loginText = login_field.getText().trim();
-//          String loginPassword = password_field.getText().trim();
-//
-//          if (!loginText.equals("") && !loginPassword.equals("")) {
-//              loginUser(loginText, loginPassword);
-//          } else
-//              System.out.println("Login and password is empty");
-//
-//      });
-//
-//      loginSignUpButton.setOnAction(event -> {
-//          openNewScene("view/signUp.fxml", loginSignUpButton);
-//
-//      });
-//
-//  }
+
     private void loginUser(String loginText, String loginPassword) {
         DatabaseHandler dbHandler = new DatabaseHandler();
         User user = new User();
         user.setUsername(loginText);
         user.setPassword(loginPassword);
         ResultSet result = dbHandler.getUser(user);
+
         int counter = 0;
 
             try{
@@ -131,7 +123,7 @@ public class SignInController implements IDirectToWindow {
             }
 
     if(counter >= 1){
-    openNewScene("view/SignUp.fxml", loginSignUpButton);
+    openNewScene("view/FindTicket.fxml");
     }
   }
 

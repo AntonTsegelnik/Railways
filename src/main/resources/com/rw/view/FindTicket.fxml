@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #c0c0c0;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rw.FindTicketController">
+    <children>
+        <AnchorPane layoutX="1.0" layoutY="67.0" prefHeight="333.0" prefWidth="700.0" style="-fx-background-color: #fafafa; -fx-border-radius: 11;">
+         <children>
+            <TextField fx:id="where_field" layoutX="151.0" layoutY="41.0" prefHeight="48.0" prefWidth="399.0" promptText="Откуда" />
+            <TextField fx:id="where_to_field" layoutX="151.0" layoutY="119.0" prefHeight="48.0" prefWidth="399.0" promptText="Куда" />
+            <DatePicker fx:id="choose_data" layoutX="151.0" layoutY="191.0" promptText="Дата" />
+            <Button fx:id="find_button" layoutX="151.0" layoutY="253.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="399.0" style="-fx-background-color: #d2b48c; -fx-border-color: silver; -fx-border-radius: 9;" text="Найти" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="Georgia" size="21.0" />
+               </font>
+            </Button>
+         </children>
+        </AnchorPane>
+        <Label layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="177.0" text="Железная дорога" textFill="WHITE">
+            <font>
+                <Font name="Georgia" size="16.0" />
+            </font>
+        </Label>
+          <Label layoutX="175.0" layoutY="20.0" prefHeight="40.0" prefWidth="333.0" text="Куда вы собираетесь ехать?" textFill="#bc900b">
+              <font>
+                  <Font name="Georgia" size="25.0" />
+              </font>
+          </Label>
+    </children>
+</AnchorPane>
