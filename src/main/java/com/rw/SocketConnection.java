@@ -113,9 +113,10 @@ public class SocketConnection {
 
 
     }
-    public String findTickets(LocalDate date, String where, String whereTo) {
+    public ArrayList<ServerFlightsResponse> findTickets(LocalDate date, String where, String whereTo) {
         String response = "";
         String result = "";
+        ArrayList<ServerFlightsResponse> serverFlightsResponses = null;
         try (Socket socket = new Socket("localhost", 3345);
              BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
              ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -143,10 +144,10 @@ public class SocketConnection {
 
 // если успел забираем ответ из канала сервера в сокете и сохраняемеё в ois переменную,  печатаем на консоль
             System.out.println("reading...");
-            var serverFlightsResponses = (ArrayList<ServerFlightsResponse>) ois.readObject();
+            serverFlightsResponses = (ArrayList<ServerFlightsResponse>) ois.readObject();
 
-            for (var item: serverFlightsResponses
-                 ) {
+            for (var item : serverFlightsResponses
+            ) {
                 System.out.println(item.Date);
                 System.out.println(item.Where);
                 System.out.println(item.WhereTo);
@@ -164,7 +165,7 @@ public class SocketConnection {
             throw new RuntimeException(e);
         }
 
-        return result;
+        return serverFlightsResponses;
 
 
     }

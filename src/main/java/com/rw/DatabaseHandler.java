@@ -36,6 +36,7 @@ public class DatabaseHandler extends Configs {
                 String date   = resSet.getString(Const.FLIGHT_DATE);
                 String from = resSet.getString( Const.RAIL_FROM);
                 String to = resSet.getString(Const.RAIL_TO);
+
                 System.out.println(date + "\t" + from + "\t" + to);
             }
         } catch (SQLException e) {
