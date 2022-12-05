@@ -26,7 +26,7 @@ public class DatabaseHandler extends Configs {
        // String formDate = formatter.format(flightsRequest.Date);
 
         String select = "SELECT * FROM " + Const.FLIGHTS_TABLE + " WHERE " +
-                Const.FLIGHT_DATE +"='%s' AND ".formatted(flightsRequest.Date)  + Const.RAIL_TO +"='%s' AND ".formatted(flightsRequest.getWhereTo()) +
+                Const.FLIGHT_DATE +"='%s' AND ".formatted(flightsRequest.getDate())  + Const.RAIL_TO +"='%s' AND ".formatted(flightsRequest.getWhereTo()) +
                 Const.RAIL_FROM + "='%s'".formatted(flightsRequest.getWhere());
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
@@ -36,6 +36,7 @@ public class DatabaseHandler extends Configs {
                 String date   = resSet.getString(Const.FLIGHT_DATE);
                 String from = resSet.getString( Const.RAIL_FROM);
                 String to = resSet.getString(Const.RAIL_TO);
+
                 System.out.println(date + "\t" + from + "\t" + to);
             }
         } catch (SQLException e) {
