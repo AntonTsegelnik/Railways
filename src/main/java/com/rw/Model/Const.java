@@ -14,6 +14,9 @@ public  class Const {
 
     public static final String RAIL_TO = "rail_to";
 
+    public static final String FLIGHT_CODE = "flight_code";
+
+    public static FlightsRequest CHOSEN_FLIGHTS;
 
 
 

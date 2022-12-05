@@ -128,9 +128,9 @@ public class SocketConnection {
 
 
             FlightsRequest obj = new FlightsRequest();
-            obj.Where = where;
-            obj.WhereTo = whereTo;
-            obj.Date = date;
+            obj.setWhere(where);
+            obj.setWhereTo(whereTo);
+            obj.setDate(date);
             obj.requestType = "findTicket";
 
 
@@ -146,12 +146,7 @@ public class SocketConnection {
             System.out.println("reading...");
             serverFlightsResponses = (ArrayList<ServerFlightsResponse>) ois.readObject();
 
-            for (var item : serverFlightsResponses
-            ) {
-                System.out.println(item.Date);
-                System.out.println(item.Where);
-                System.out.println(item.WhereTo);
-            }
+
 
             System.out.println("Closing connections & channels on clentSide - DONE.");
 
@@ -166,6 +161,53 @@ public class SocketConnection {
         }
 
         return serverFlightsResponses;
+
+
+    }
+    public ArrayList<Price> getPrices(String flightCode) {
+        String response = "";
+        String result = "";
+        ArrayList<Price> Prices = null;
+        try (Socket socket = new Socket("localhost", 3345);
+             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());) {
+
+
+            System.out.println("Client connected to socket.");
+            System.out.println();
+
+            Price obj = new Price();
+            obj.setFlightCode(flightCode);
+            obj.requestType = "getPrice";
+
+// пишем данные с консоли в канал сокета для сервера
+
+            oos.writeObject(obj);
+            oos.flush();
+
+
+// ждём чтобы сервер успел прочесть сообщение из сокета и ответить
+
+// если успел забираем ответ из канала сервера в сокете и сохраняемеё в ois переменную,  печатаем на консоль
+            System.out.println("reading...");
+           Prices = (ArrayList<Price>) ois.readObject();
+
+
+
+            System.out.println("Closing connections & channels on clentSide - DONE.");
+
+        } catch (UnknownHostException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return Prices;
 
 
     }

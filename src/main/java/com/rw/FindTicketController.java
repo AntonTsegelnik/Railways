@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 
 public class FindTicketController {
 
+    public static  ArrayList<ServerFlightsResponse> DATA_ABOUT_FLIGHTS = null;
     @FXML
     private ResourceBundle resources;
 
@@ -41,7 +43,7 @@ public class FindTicketController {
     @FXML
     private TextField where_to_field;
 
-    static List<ServerFlightsResponse> DATA_ABOUT_FLIGHTS;
+
 
     @FXML
     void initialize() {
