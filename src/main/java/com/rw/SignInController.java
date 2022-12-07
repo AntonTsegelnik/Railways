@@ -40,7 +40,7 @@ public class SignInController implements IDirectToWindow {
     @FXML
     private PasswordField password_field;
 
-    private Server server;
+    static String CURRENT_USER;
 
 
 
@@ -69,8 +69,8 @@ public class SignInController implements IDirectToWindow {
             String loginPassword = password_field.getText().trim();
 
             var connection = new SocketConnection();
-           var result =  connection.authorize(loginText, loginPassword);
-           if(result.equals("OK")) {
+           CURRENT_USER =  connection.authorize(loginText, loginPassword);
+           if(CURRENT_USER != null) {
                authSignInButton.getScene().getWindow().hide();
                openNewScene("view/FindTicket.fxml");
            }

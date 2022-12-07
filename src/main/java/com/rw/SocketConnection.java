@@ -39,10 +39,10 @@ public class SocketConnection {
 
 // если успел забираем ответ из канала сервера в сокете и сохраняемеё в ois переменную,  печатаем на консоль
             System.out.println("reading...");
-            ServerResponse serverResponse = (ServerResponse) ois.readObject();
+            response = (String) ois.readObject();
 
             //System.out.println(serverResponse.body);
-            response = serverResponse.body;
+
 
             System.out.println("Closing connections & channels on clentSide - DONE.");
 
@@ -113,6 +113,7 @@ public class SocketConnection {
 
 
     }
+
     public ArrayList<ServerFlightsResponse> findTickets(LocalDate date, String where, String whereTo) {
         String response = "";
         String result = "";
@@ -147,7 +148,6 @@ public class SocketConnection {
             serverFlightsResponses = (ArrayList<ServerFlightsResponse>) ois.readObject();
 
 
-
             System.out.println("Closing connections & channels on clentSide - DONE.");
 
         } catch (UnknownHostException e) {
@@ -164,6 +164,7 @@ public class SocketConnection {
 
 
     }
+
     public ArrayList<Price> getPrices(String flightCode) {
         String response = "";
         String result = "";
@@ -191,8 +192,7 @@ public class SocketConnection {
 
 // если успел забираем ответ из канала сервера в сокете и сохраняемеё в ois переменную,  печатаем на консоль
             System.out.println("reading...");
-           Prices = (ArrayList<Price>) ois.readObject();
-
+            Prices = (ArrayList<Price>) ois.readObject();
 
 
             System.out.println("Closing connections & channels on clentSide - DONE.");
@@ -211,5 +211,95 @@ public class SocketConnection {
 
 
     }
+
+
+    public int setPassenger(Passenger passenger) {
+
+        String result = null;
+        int genId = 0;
+        try (Socket socket = new Socket("localhost", 3345);
+             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());) {
+
+            System.out.println("Client connected to socket.");
+            System.out.println();
+
+            Passenger obj = new Passenger();
+            obj = passenger;
+            obj.requestType = "setPassenger";
+
+// пишем данные с консоли в канал сокета для сервера
+
+            oos.writeObject(obj);
+            oos.flush();
+
+
+// ждём чтобы сервер успел прочесть сообщение из сокета и ответить
+
+// если успел забираем ответ из канала сервера в сокете и сохраняемеё в ois переменную,  печатаем на консоль
+            System.out.println("reading...");
+            genId = (int) ois.readObject();
+            System.out.println(genId);
+
+            System.out.println("Closing connections & channels on clentSide - DONE.");
+
+        } catch (UnknownHostException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return genId;
+
+    }
+
+    public Ticket bookTicket(Ticket ticket) {
+
+        Ticket res = null;
+        try (Socket socket = new Socket("localhost", 3345);
+             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());) {
+
+            System.out.println("Client connected to socket.");
+            System.out.println();
+
+            Ticket obj = new Ticket();
+            obj = ticket;
+
+            obj.requestType = "bookTicket";
+
+// пишем данные с консоли в канал сокета для сервера
+
+            oos.writeObject(obj);
+            oos.flush();
+
+
+// ждём чтобы сервер успел прочесть сообщение из сокета и ответить
+
+// если успел забираем ответ из канала сервера в сокете и сохраняемеё в ois переменную,  печатаем на консоль
+            System.out.println("reading...");
+            res = (Ticket) ois.readObject();
+            System.out.println(res);
+
+
+            System.out.println("Closing connections & channels on clentSide - DONE.");
+
+        } catch (UnknownHostException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
 }
+
 
