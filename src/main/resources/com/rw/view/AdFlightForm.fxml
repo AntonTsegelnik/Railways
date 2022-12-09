@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="621.0" prefWidth="989.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rw.AddFlightController">
+   <children>
+      <TextField fx:id="flight_code_field" layoutX="75.0" layoutY="79.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextField fx:id="flight_distance_field" layoutX="382.0" layoutY="79.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextField fx:id="coupe_field" layoutX="739.0" layoutY="79.0" prefHeight="31.0" prefWidth="226.0" />
+      <Text fill="#e11907" layoutX="75.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Код рейса" wrappingWidth="87.0" />
+      <Text fill="#e11907" layoutX="385.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Расстояние" wrappingWidth="81.0" />
+      <Text fill="#e11907" layoutX="75.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Время отправления" wrappingWidth="141.0" />
+      <Text fill="#e11907" layoutX="382.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата прибытия" wrappingWidth="87.0" />
+      <Button fx:id="adding_button" layoutX="274.0" layoutY="547.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="152.0" text="Добавить" />
+      <Button fx:id="cancel_button" layoutX="608.0" layoutY="547.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="152.0" text="Отмена" />
+      <TextField fx:id="res_field" layoutX="739.0" layoutY="186.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextField fx:id="seats_field" layoutX="739.0" layoutY="292.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextField fx:id="dep_time_field" layoutX="75.0" layoutY="292.0" prefHeight="31.0" prefWidth="226.0" />
+      <Text fill="#e11907" layoutX="75.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата отправления" wrappingWidth="105.0" />
+      <Text fill="#e11907" layoutX="385.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Время прибытия" wrappingWidth="141.0" />
+      <TextField fx:id="ar_time_field" layoutX="382.0" layoutY="292.0" prefHeight="31.0" prefWidth="226.0" />
+      <DatePicker fx:id="dep_date_field" layoutX="75.0" layoutY="186.0" prefHeight="31.0" prefWidth="226.0" />
+      <DatePicker fx:id="ar_date_field" layoutX="382.0" layoutY="186.0" prefHeight="31.0" prefWidth="226.0" />
+      <Text fill="#e11907" layoutX="739.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество купейных мест" wrappingWidth="158.0" />
+      <Text fill="#e11907" layoutX="739.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество плац-ных мест" wrappingWidth="158.0" />
+      <Text fill="#e11907" layoutX="739.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество сидячих мест" wrappingWidth="158.0" />
+      <TextField fx:id="rail_from_field" layoutX="81.0" layoutY="391.0" prefHeight="31.0" prefWidth="226.0" />
+      <Text fill="#e11907" layoutX="81.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Откуда" wrappingWidth="141.0" />
+      <Text fill="#e11907" layoutX="382.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Куда" wrappingWidth="141.0" />
+      <TextField fx:id="rail_to_field" layoutX="382.0" layoutY="391.0" prefHeight="31.0" prefWidth="226.0" />
+   </children>
+</AnchorPane>

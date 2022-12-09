@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 
 public class FindTicketController {
 
-    public static  ArrayList<ServerFlightsResponse> DATA_ABOUT_FLIGHTS = null;
+    public static ArrayList<ServerFlightsResponse> DATA_ABOUT_FLIGHTS = null;
     @FXML
     private ResourceBundle resources;
 
@@ -36,13 +36,13 @@ public class FindTicketController {
 
     @FXML
     private Button find_button;
-
+    @FXML
+    private Button my_tickets_button;
     @FXML
     private TextField where_field;
 
     @FXML
     private TextField where_to_field;
-
 
 
     @FXML
@@ -55,10 +55,8 @@ public class FindTicketController {
             String whereTo = where_to_field.getText().trim();
             LocalDate date = choose_data.getValue();
 
-
             SocketConnection connection = new SocketConnection();
-            DATA_ABOUT_FLIGHTS = connection.findTickets(date,where,whereTo);
-
+            DATA_ABOUT_FLIGHTS = connection.findTickets(date, where, whereTo);
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("view/ShowFlights.fxml"));
@@ -74,12 +72,23 @@ public class FindTicketController {
             stage.setScene(new Scene(root));
             stage.showAndWait();
 
-//            DatabaseHandler dbHandler = new DatabaseHandler();
-//            FlightsRequest flightsRequest = new FlightsRequest(where, whereTo, date);
-//
-//            ResultSet result = dbHandler.getFlight(flightsRequest);
+        });
+        my_tickets_button.setOnAction(actionEvent -> {
 
 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("view/ShowMyTickets.fxml"));
+
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent root = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
 
         });
 

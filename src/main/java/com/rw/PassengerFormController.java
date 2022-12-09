@@ -70,17 +70,15 @@ public class PassengerFormController {
     @FXML
     void initialize() {
 
-
         getPrices();
 
         this.seat_type_field.setItems(FXCollections.observableArrayList("Купейный", "Плацкартный", "Сидячий"));
-
         this.flight_code_field.setText(CHOSEN_FLIGHTS.getFlightCode());
         this.coupe_field.setText(Integer.toString(CHOSEN_FLIGHTS.getCoupe()));
         this.res_field.setText(Integer.toString(CHOSEN_FLIGHTS.getRes()));
         this.seat_field.setText(Integer.toString(CHOSEN_FLIGHTS.getSeats()));
-        booking_button.setOnAction(EventAction -> {
 
+        booking_button.setOnAction(EventAction -> {
 
             var passenger = new Passenger(name_field.getText(), last_name_field.getText(),
                     country_field.getText(), passport_field.getText(), CURRENT_USER);
@@ -88,10 +86,11 @@ public class PassengerFormController {
             passenger.setPassId(setPassenger(passenger));
             bookTicket(passenger);
 
-
         });
 
-
+        cancel_button.setOnAction(EventAction->{
+            cancel_button.getScene().getWindow().hide();
+        });
     }
 
     private void bookTicket(Passenger passenger) {
@@ -107,26 +106,32 @@ public class PassengerFormController {
         var ticket = new Ticket();
         ticket.setFlightCode(CHOSEN_FLIGHTS.getFlightCode());
         ticket.setPassId(passenger.getPassId());
-        if (seat_type_field.getSelectionModel().getSelectedItem().toString().equals("Купейный")) {
+        if (seat_type_field.getSelectionModel().getSelectedItem().toString().equals("Купейный") && coupe_field.getText() != "0") {
             ticket.setSeatType("Купейный");
             ticket.setTrainCar(1);
             ticket.setSeatNum(Integer.parseInt(coupe_field.getText()));
             this.coupe_field.setText(Integer.toString((ticket.getSeatNum() - 1)));
             //TO DO Change in db
+        } else {
+            System.out.println("No coupe tickets");
         }
-        if (seat_type_field.getSelectionModel().getSelectedItem().toString().equals("Плацкартный")) {
+        if (seat_type_field.getSelectionModel().getSelectedItem().toString().equals("Плацкартный") && res_field.getText() != "0") {
             ticket.setSeatType("Плацкартный");
             ticket.setTrainCar(2);
             ticket.setSeatNum(Integer.parseInt(res_field.getText()));
             this.res_field.setText(Integer.toString((ticket.getSeatNum() - 1)));
             //TO DO Change in db
+        } else {
+            System.out.println("No res tickets");
         }
-        if (seat_type_field.getSelectionModel().getSelectedItem().toString().equals("Сидячий")) {
+        if (seat_type_field.getSelectionModel().getSelectedItem().toString().equals("Сидячий") && seat_field.getText() != "0") {
             ticket.setSeatType("Сидячий");
             ticket.setTrainCar(3);
             ticket.setSeatNum(Integer.parseInt(seat_field.getText()));
             this.seat_field.setText(Integer.toString((ticket.getSeatNum() - 1)));
             //TO DO Change in db
+        } else {
+            System.out.println("No seats tickets");
         }
         return ticket;
     }

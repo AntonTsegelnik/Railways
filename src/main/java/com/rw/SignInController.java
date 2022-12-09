@@ -69,10 +69,18 @@ public class SignInController implements IDirectToWindow {
             String loginPassword = password_field.getText().trim();
 
             var connection = new SocketConnection();
-           CURRENT_USER =  connection.authorize(loginText, loginPassword);
+
+            var user =  connection.authorize(loginText, loginPassword);
+            CURRENT_USER = user.getUsername();
            if(CURRENT_USER != null) {
-               authSignInButton.getScene().getWindow().hide();
-               openNewScene("view/FindTicket.fxml");
+               if (user.getRole() == 1) {
+                   authSignInButton.getScene().getWindow().hide();
+                   openNewScene("view/FindTicket.fxml");
+               }
+               if (user.getRole() == 0) {
+                   authSignInButton.getScene().getWindow().hide();
+                   openNewScene("view/AdminPanel.fxml");
+               }
            }
            else {
                System.out.println("Error");
