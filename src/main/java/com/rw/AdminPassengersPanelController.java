@@ -74,7 +74,7 @@ public class AdminPassengersPanelController implements IDirectToWindow {
     @FXML
     private TableView<Passenger> tablePassengers;
 
-    static String CURRENT_FC;
+    static Passenger CURRENT_PAS;
     static FlightsRequest CURRENT_FLIGHT;
 
 
@@ -110,7 +110,25 @@ public class AdminPassengersPanelController implements IDirectToWindow {
 
             if (choose_table.getSelectionModel().getSelectedIndex() == 1) {
 
-              showTable();
+                showTable();
+
+            }
+            if (choose_table.getSelectionModel().getSelectedIndex() == 2) {
+
+                show_table_button.getScene().getWindow().hide();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AdminTicketsPanel.fxml"));
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                AdminTicketsPanelController someApplicationController = loader.getController();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("");
+                stage.show();
 
             }
         });
@@ -120,68 +138,67 @@ public class AdminPassengersPanelController implements IDirectToWindow {
             @Override
             public void changed(ObservableValue<? extends Passenger> observableValue, Passenger flightsRequest, Passenger t1) {
                 if (t1 != null)
-                    System.out.println(t1.getUsername());
-
+                    CURRENT_PAS = t1;
             }
         });
 
-//        delete_button.setOnAction(Event -> {
-//            var connection = new SocketConnection();
-//            flights = FXCollections.observableArrayList(connection.deleteFlight(CURRENT_FC));
-//            tableFlights.setItems(flights);
-//        });
+        delete_button.setOnAction(Event -> {
+            var connection = new SocketConnection();
+            passengers = FXCollections.observableArrayList(connection.deletePassenger(CURRENT_PAS.getPassId()));
+            tablePassengers.setItems(passengers);
+        });
 
         add_button.setOnAction(Event -> {
             openNewScene("view/AddPassengerForm.fxml");
         });
         edit_button.setOnAction(Event -> {
-            openNewScene("view/EditFlightForm.fxml");
+            openNewScene("view/EditPassengerForm.fxml");
         });
         find_button.setOnAction(Event -> {
             var search = choose_column.getSelectionModel().getSelectedItem().toString();
             var textIn = search_field.getText();
-            ArrayList<FlightsRequest> findFlights = new ArrayList<>();
+            ArrayList<Passenger> findPas = new ArrayList<>();
             var con = new SocketConnection();
-            var flightsDB = con.getFlights();
+            var pasen = con.getPassengers();
             if (choose_column.getSelectionModel().getSelectedIndex() == 0) {
-                if (flightsDB != null) {
-                    for (var item : flightsDB
+                if (pasen != null) {
+                    for (var item : pasen
                     ) {
-                        if (item.getFlightCode().equals(textIn)) {
-                            findFlights.add(item);
+                        if (item.getPassId() == Integer.parseInt(textIn)) {
+                            findPas.add(item);
                         }
 
                     }
                 }
             }
             if (choose_column.getSelectionModel().getSelectedIndex() == 1) {
-                if (flightsDB != null) {
-                    for (var item : flightsDB
+                if (pasen != null) {
+                    for (var item : pasen
                     ) {
-                        if (item.getWhere().equals(textIn)) {
-                            findFlights.add(item);
+                        if (item.getPassportNum().equals(textIn)) {
+                            findPas.add(item);
                         }
 
                     }
                 }
             }
             if (choose_column.getSelectionModel().getSelectedIndex() == 2) {
-                if (flightsDB != null) {
-                    for (var item : flightsDB
+                if (pasen != null) {
+                    for (var item : pasen
                     ) {
-                        if (item.getWhereTo().equals(textIn)) {
-                            findFlights.add(item);
+                        if (item.getFirstName().equals(textIn)) {
+                            findPas.add(item);
                         }
 
                     }
                 }
             }
-
-//            flights = FXCollections.observableArrayList(findFlights);
-//            tableFlights.setItems(flights);
+            passengers = FXCollections.observableArrayList(findPas);
+            tablePassengers.setItems(passengers);
         });
     }
-    public void showTable(){
+
+    public void showTable() {
         var connection = new SocketConnection();
         var passengersFromDB = connection.getPassengers();
 

@@ -125,6 +125,24 @@ public class AdminFlightPanelController implements IDirectToWindow {
                 stage.show();
 
             }
+            if(choose_table.getSelectionModel().getSelectedIndex() == 2){
+                show_table_button.getScene().getWindow().hide();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AdminTicketsPanel.fxml"));
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                var someApplicationController = loader.getController();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("");
+                stage.show();
+
+            }
 
         });
 
