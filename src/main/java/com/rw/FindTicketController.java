@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -48,30 +49,47 @@ public class FindTicketController {
     @FXML
     void initialize() {
         find_button.setOnAction(actionEvent -> {
-
-
-            //init
-            String where = where_field.getText().trim();
-            String whereTo = where_to_field.getText().trim();
-            LocalDate date = choose_data.getValue();
-
-            SocketConnection connection = new SocketConnection();
-            DATA_ABOUT_FLIGHTS = connection.findTickets(date, where, whereTo);
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("view/ShowFlights.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (
+                    where_field.getText().isBlank() ||
+                            where_to_field.getText().isEmpty()
+            ) {
+                var alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Заполните все поля");
+                alert.show();
+                return;
             }
+            else {
 
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
+                //init
+                String where = where_field.getText().trim();
+                String whereTo = where_to_field.getText().trim();
+                LocalDate date = choose_data.getValue();
 
+                SocketConnection connection = new SocketConnection();
+                DATA_ABOUT_FLIGHTS = connection.findTickets(date, where, whereTo);
+                if(DATA_ABOUT_FLIGHTS.size() == 0){
+                    var alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Рейс не найден");
+                    alert.show();
+                    return;
+
+                }
+                else {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("view/ShowFlights.fxml"));
+
+                    try {
+                        loader.load();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Parent root = loader.getRoot();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.showAndWait();
+                }
+            }
         });
         my_tickets_button.setOnAction(actionEvent -> {
 

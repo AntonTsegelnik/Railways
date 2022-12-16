@@ -97,7 +97,7 @@ public class AdminFlightPanelController implements IDirectToWindow {
     @FXML
     private void initialize() {
         this.choose_column.setItems(FXCollections.observableArrayList("Код рейса", "Откуда", "Куда"));
-        this.choose_table.setItems(FXCollections.observableArrayList("Рейсы", "Пассажиры", "Билеты", "Бронь"));
+        this.choose_table.setItems(FXCollections.observableArrayList("Рейсы", "Пассажиры", "Билеты", "Цены", "Бронь"));
         this.choose_table.setValue("Рейсы");
         showTable();
 
@@ -129,6 +129,43 @@ public class AdminFlightPanelController implements IDirectToWindow {
                 show_table_button.getScene().getWindow().hide();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AdminTicketsPanel.fxml"));
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                var someApplicationController = loader.getController();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("");
+                stage.show();
+
+            }
+            if(choose_table.getSelectionModel().getSelectedIndex() == 3){
+
+                show_table_button.getScene().getWindow().hide();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AdminPricesPanel.fxml"));
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                var someApplicationController = loader.getController();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("");
+                stage.show();
+                showTable();
+
+            }
+            if (choose_table.getSelectionModel().getSelectedIndex() == 4) {
+                show_table_button.getScene().getWindow().hide();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AdminBookingPanel.fxml"));
                 Parent root = null;
                 try {
                     root = loader.load();

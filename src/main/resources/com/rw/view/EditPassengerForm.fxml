@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TextArea?>
 <AnchorPane prefHeight="409.0" prefWidth="989.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rw.EditPassengerController">
    <children>
       <TextField fx:id="id_field" layoutX="75.0" layoutY="79.0" prefHeight="31.0" prefWidth="226.0" />
@@ -19,7 +20,7 @@
       <Text fill="#e11907" layoutX="739.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Фамилия" wrappingWidth="158.0" />
       <Text fill="#e11907" layoutX="376.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер паспорта" wrappingWidth="158.0" />
       <TextField fx:id="country_field" layoutX="75.0" layoutY="189.0" prefHeight="31.0" prefWidth="226.0" />
-      <TextField fx:id="username_field" layoutX="727.0" layoutY="188.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextArea fx:id="username_field" layoutX="727.0" layoutY="188.0" prefHeight="31.0" prefWidth="226.0" />
       <Text fill="#e11907" layoutX="727.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пользователь" wrappingWidth="158.0" />
    </children>
 </AnchorPane>

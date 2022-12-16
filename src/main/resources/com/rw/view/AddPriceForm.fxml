@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="303.0" prefWidth="989.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rw.AddPriceController">
+   <children>
+      <Button fx:id="adding_button" layoutX="249.0" layoutY="241.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="152.0" text="Добавить" />
+      <Button fx:id="cancel_button" layoutX="547.0" layoutY="241.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="152.0" text="Отмена" />
+      <TextArea fx:id="SeatType" layoutX="374.0" layoutY="97.0" prefHeight="31.0" prefWidth="226.0" />
+      <Text fill="#e11907" layoutX="374.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Тип места" wrappingWidth="158.0" />
+      <Text fill="#e11907" layoutX="73.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Цена" wrappingWidth="158.0" />
+      <TextField fx:id="Price" layoutX="73.0" layoutY="97.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextArea fx:id="FlightCode" layoutX="725.0" layoutY="96.0" prefHeight="31.0" prefWidth="226.0" />
+      <Text fill="#e11907" layoutX="725.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Код рейса" wrappingWidth="158.0" />
+   </children>
+</AnchorPane>

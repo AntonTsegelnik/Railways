@@ -7,9 +7,7 @@ import com.rw.Model.Passenger;
 import com.rw.Model.Ticket;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.w3c.dom.Text;
 
 import static com.rw.Model.Const.CHOSEN_FLIGHTS;
@@ -33,13 +31,13 @@ public class PassengerFormController {
     private TextField country_field;
 
     @FXML
-    private TextField coupe_field;
+    private TextArea coupe_field;
 
     @FXML
-    private TextField coupe_price_field;
+    private TextArea coupe_price_field;
 
     @FXML
-    private TextField flight_code_field;
+    private TextArea flight_code_field;
 
     @FXML
     private TextField last_name_field;
@@ -51,16 +49,16 @@ public class PassengerFormController {
     private TextField passport_field;
 
     @FXML
-    private TextField res_field;
+    private TextArea res_field;
 
     @FXML
-    private TextField res_price_field;
+    private TextArea res_price_field;
 
     @FXML
-    private TextField seat_field;
+    private TextArea seat_field;
 
     @FXML
-    private TextField seat_price_field;
+    private TextArea seat_price_field;
 
     @FXML
     private ChoiceBox seat_type_field;
@@ -71,6 +69,14 @@ public class PassengerFormController {
     void initialize() {
 
         getPrices();
+
+        this.coupe_field.setEditable(false);
+        this.res_field.setEditable(false);
+        this.seat_field.setEditable(false);
+        this.coupe_price_field.setEditable(false);
+        this.res_price_field.setEditable(false);
+        this.seat_price_field.setEditable(false);
+        this.flight_code_field.setEditable(false);
 
         this.seat_type_field.setItems(FXCollections.observableArrayList("Купейный", "Плацкартный", "Сидячий"));
         this.flight_code_field.setText(CHOSEN_FLIGHTS.getFlightCode());
@@ -85,10 +91,10 @@ public class PassengerFormController {
 
             passenger.setPassId(setPassenger(passenger));
             bookTicket(passenger);
-
+            booking_button.getScene().getWindow().hide();
         });
 
-        cancel_button.setOnAction(EventAction->{
+        cancel_button.setOnAction(EventAction -> {
             cancel_button.getScene().getWindow().hide();
         });
     }
@@ -99,6 +105,15 @@ public class PassengerFormController {
 
         var connection = new SocketConnection();
         var bookingTicket = connection.bookTicket(ticket);
+        if (bookingTicket.equals("Success")) {
+            var alert = new Alert(Alert.AlertType.INFORMATION);
+
+
+            alert.setHeaderText("Билет успешно забронирован ");
+            alert.show();
+            return;
+
+        }
 
     }
 

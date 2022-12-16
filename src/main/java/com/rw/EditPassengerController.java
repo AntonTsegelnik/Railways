@@ -3,6 +3,7 @@ package com.rw;
 import com.rw.Model.Passenger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import static com.rw.AdminFlightPanelController.CURRENT_FLIGHT;
@@ -32,7 +33,7 @@ public class EditPassengerController {
     private TextField passport_num_field;
 
     @FXML
-    private TextField username_field;
+    private TextArea username_field;
 
     @FXML
     void initialize() {
@@ -58,7 +59,7 @@ public class EditPassengerController {
 
     private void setCurrentPassenger() {
         if(CURRENT_PAS != null){
-
+            username_field.setEditable(false);
             this.id_field.setText(Integer.toString(CURRENT_PAS.getPassId()));
             this.firstname_field.setText(CURRENT_PAS.getFirstName());
             this.lastname_field.setText(CURRENT_PAS.getLastName());

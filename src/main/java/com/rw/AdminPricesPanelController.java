@@ -1,7 +1,7 @@
 package com.rw;
 
 import com.rw.Model.FlightsRequest;
-import com.rw.Model.Passenger;
+import com.rw.Model.Price;
 import com.rw.Model.Ticket;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,39 +16,28 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 
-public class AdminTicketsPanelController implements IDirectToWindow {
-    private ObservableList<Ticket> tickets = FXCollections.observableArrayList();
+public class AdminPricesPanelController implements IDirectToWindow {
+    private ObservableList<Price> prices = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Ticket> tableTickets;
+    private TableView<Price> tablePrices;
+
+
 
     @FXML
-    private TableColumn<Ticket, Integer> TrainCar;
+    private TableColumn<Price, Double> Price;
 
     @FXML
-    private TableColumn<Ticket, Integer> SeatNum;
-
+    private TableColumn<Price, String> SeatType;
     @FXML
-    private TableColumn<Ticket, String> SeatType;
-    @FXML
-    private TableColumn<Ticket, String> FlightCode;
-    @FXML
-    private TableColumn<Ticket, Integer> TicketCode;
-    @FXML
-    private TableColumn<Ticket, Integer> PassId;
+    private TableColumn<Price, String> FlightCode;
 
 
     @FXML
     private TextField search_field;
-
-    @FXML
-    private Button add_button;
 
     @FXML
     private ChoiceBox choose_table;
@@ -60,18 +49,13 @@ public class AdminTicketsPanelController implements IDirectToWindow {
     private Button delete_button;
 
     @FXML
-    private Button edit_button;
-
-    @FXML
     private Button find_button;
 
     @FXML
     private Button show_table_button;
     @FXML
     private Button create_price_button;
-    @FXML
-    private Button addInBookingButton;
-    static Ticket CURRENT_TIX;
+    static com.rw.Model.Price CURRENT_PRICE;
     static FlightsRequest CURRENT_FLIGHT;
 
 
@@ -80,90 +64,82 @@ public class AdminTicketsPanelController implements IDirectToWindow {
     private void initialize() {
 
 
-        this.choose_column.setItems(FXCollections.observableArrayList("Код рейса", "Код билета", "Тип места"));
+        this.choose_column.setItems(FXCollections.observableArrayList("Код рейса", "Тип билета", "Цена"));
         this.choose_table.setItems(FXCollections.observableArrayList("Рейсы", "Пассажиры", "Билеты", "Цены", "Бронь"));
+        this.choose_table.setValue("Цены");
 
-        this.choose_table.setValue("Билеты");
         showTable();
-        //show
-        route();
+        show_table_button.setOnAction(Event -> {
 
-         TableView.TableViewSelectionModel<Ticket> selectionModel = tableTickets.getSelectionModel();
-          selectionModel.selectedItemProperty().addListener(new ChangeListener<Ticket>() {
+            route();
+        });
+         TableView.TableViewSelectionModel<Price> selectionModel = tablePrices.getSelectionModel();
+          selectionModel.selectedItemProperty().addListener(new ChangeListener<Price>() {
            @Override
-           public void changed(ObservableValue<? extends Ticket> observableValue, Ticket flightsRequest, Ticket t1) {
+           public void changed(ObservableValue<? extends Price> observableValue, Price flightsRequest, Price t1) {
                if (t1 != null)
-                   CURRENT_TIX = t1;
+                   CURRENT_PRICE = t1;
            }
        });
 
        delete_button.setOnAction(Event -> {
            var connection = new SocketConnection();
-           tickets = FXCollections.observableArrayList(connection.deleteTicket(CURRENT_TIX.getTicketCode()));
-           tableTickets.setItems(tickets);
+           var connection2 = new SocketConnection();
+           connection.deletePrice(CURRENT_PRICE);
+           prices = FXCollections.observableArrayList(connection2.getPricesForAdmin());
+           tablePrices.setItems(prices);
        });
 
-        addInBookingButton.setOnAction(Event -> {
-            var connection = new SocketConnection();
-            connection.addTixInBooking(CURRENT_TIX);
-            tickets = FXCollections.observableArrayList(connection.getTicketsForAdmin());
-            tableTickets.setItems(tickets);
+        create_price_button.setOnAction(Event -> {
+            openNewScene("view/AddPriceMainForm.fxml");
         });
-        add_button.setOnAction(Event -> {
-            openNewScene("view/AddTicketForm.fxml");
-        });
-       edit_button.setOnAction(Event -> {
-           openNewScene("view/EditTicketForm.fxml");
-       });
         find_button.setOnAction(Event -> {
            search();
         });
-        create_price_button.setOnAction(Event->{
-            openNewScene("view/AddPriceForm.fxml");
-        });
+
     }
 
     private void search() {
         var search = choose_column.getSelectionModel().getSelectedItem().toString();
         var textIn = search_field.getText();
-        ArrayList<Ticket> finTix = new ArrayList<>();
+        ArrayList<Price> finPrice = new ArrayList<>();
         var con = new SocketConnection();
-        var tix = con.getTicketsForAdmin();
+        var prc = con.getPricesForAdmin();
         if (choose_column.getSelectionModel().getSelectedIndex() == 0) {
-            if (tix != null) {
-                for (var item : tix
+            if (prc != null) {
+                for (var item : prc
                 ) {
                     if (item.getFlightCode().equals (textIn)) {
-                        finTix.add(item);
-                    }
-
-                }
-            }
-        }
-        if (choose_column.getSelectionModel().getSelectedIndex() == 1) {
-            if (tix != null) {
-                for (var item : tix
-                ) {
-                    if (item.getTicketCode()== Integer.parseInt(textIn)) {
-                        finTix.add(item);
+                        finPrice.add(item);
                     }
 
                 }
             }
         }
         if (choose_column.getSelectionModel().getSelectedIndex() == 2) {
-            if (tix != null) {
-                for (var item : tix
+            if (prc != null) {
+                for (var item : prc
                 ) {
-                    if (item.getSeatType().equals(textIn)) {
-                        finTix.add(item);
+                    if (item.getPrice() == Double.parseDouble(textIn)) {
+                        finPrice.add(item);
                     }
 
                 }
             }
         }
-        tickets = FXCollections.observableArrayList(finTix);
-        tableTickets.setItems(tickets);
+        if (choose_column.getSelectionModel().getSelectedIndex() == 1) {
+            if (prc != null) {
+                for (var item : prc
+                ) {
+                    if (item.getSeatType().equals(textIn)) {
+                        finPrice.add(item);
+                    }
+
+                }
+            }
+        }
+        prices = FXCollections.observableArrayList(finPrice);
+        tablePrices.setItems(prices);
     }
 
     private void route() {
@@ -210,12 +186,8 @@ public class AdminTicketsPanelController implements IDirectToWindow {
 
             if (choose_table.getSelectionModel().getSelectedIndex() == 2) {
 
-                showTable();
-            }
-            if(choose_table.getSelectionModel().getSelectedIndex() == 3){
                 show_table_button.getScene().getWindow().hide();
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AdminPricesPanel.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AdminTicketsPanel.fxml"));
                 Parent root = null;
                 try {
                     root = loader.load();
@@ -228,7 +200,11 @@ public class AdminTicketsPanelController implements IDirectToWindow {
                 stage.setScene(new Scene(root));
                 stage.setTitle("");
                 stage.show();
+                showTable();
+            }
+            if (choose_table.getSelectionModel().getSelectedIndex() == 3) {
 
+                showTable();
             }
             if (choose_table.getSelectionModel().getSelectedIndex() == 4) {
                 show_table_button.getScene().getWindow().hide();
@@ -254,20 +230,17 @@ public class AdminTicketsPanelController implements IDirectToWindow {
 
     public void showTable() {
         var connection = new SocketConnection();
-        var tck = connection.getTicketsForAdmin();
+        var pricesDb = connection.getPricesForAdmin();
 
-        tickets = FXCollections.observableArrayList(tck);
+        prices = FXCollections.observableArrayList(pricesDb);
 
         // устанавливаем тип и значение которое должно хранится в колонке
-        TicketCode.setCellValueFactory(new PropertyValueFactory<Ticket, Integer>("TicketCode"));
-        FlightCode.setCellValueFactory(new PropertyValueFactory<Ticket, String>("FlightCode"));
-        TrainCar.setCellValueFactory(new PropertyValueFactory<Ticket, Integer>("TrainCar"));
-        SeatNum.setCellValueFactory(new PropertyValueFactory<Ticket, Integer>("SeatNum"));
-        SeatType.setCellValueFactory(new PropertyValueFactory<Ticket, String>("SeatType"));
-        PassId.setCellValueFactory(new PropertyValueFactory<Ticket, Integer>("PassId"));
+        Price.setCellValueFactory(new PropertyValueFactory<Price, Double>("Price"));
+        FlightCode.setCellValueFactory(new PropertyValueFactory<Price, String>("FlightCode"));
+        SeatType.setCellValueFactory(new PropertyValueFactory<Price, String>("SeatType"));
 
 
         // заполняем таблицу данными
-        tableTickets.setItems(tickets);
+        tablePrices.setItems(prices);
     }
 }
