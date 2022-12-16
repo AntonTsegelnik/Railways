@@ -6,21 +6,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TextArea?>
 <AnchorPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rw.PassengerFormController">
    <children>
       <TextField fx:id="name_field" layoutX="75.0" layoutY="79.0" prefHeight="31.0" prefWidth="226.0" />
       <TextField fx:id="last_name_field" layoutX="424.0" layoutY="79.0" prefHeight="31.0" prefWidth="226.0" />
       <TextField fx:id="passport_field" layoutX="75.0" layoutY="186.0" prefHeight="31.0" prefWidth="226.0" />
-      <TextField fx:id="flight_code_field" layoutX="424.0" layoutY="186.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextArea fx:id="flight_code_field" layoutX="424.0" layoutY="186.0" prefHeight="31.0" prefWidth="226.0" />
       <TextField fx:id="country_field" layoutX="75.0" layoutY="300.0" prefHeight="31.0" prefWidth="226.0" />
       <Text layoutX="341.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Свободные места" wrappingWidth="112.13671875" />
       <Text layoutX="557.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Цена" wrappingWidth="32.13671875" />
-      <TextField fx:id="coupe_field" layoutX="341.0" layoutY="397.0" prefHeight="25.0" prefWidth="55.0" />
-      <TextField fx:id="res_field" layoutX="341.0" layoutY="434.0" prefHeight="25.0" prefWidth="55.0" />
-      <TextField fx:id="seat_field" layoutX="341.0" layoutY="474.0" prefHeight="25.0" prefWidth="55.0" />
-      <TextField fx:id="coupe_price_field" layoutX="546.0" layoutY="397.0" prefHeight="25.0" prefWidth="55.0" />
-      <TextField fx:id="res_price_field" layoutX="546.0" layoutY="434.0" prefHeight="25.0" prefWidth="55.0" />
-      <TextField fx:id="seat_price_field" layoutX="546.0" layoutY="474.0" prefHeight="25.0" prefWidth="55.0" />
+      <TextArea fx:id="coupe_field" layoutX="341.0" layoutY="397.0" prefHeight="25.0" prefWidth="55.0" />
+      <TextArea fx:id="res_field" layoutX="341.0" layoutY="434.0" prefHeight="25.0" prefWidth="55.0" />
+      <TextArea fx:id="seat_field" layoutX="341.0" layoutY="474.0" prefHeight="25.0" prefWidth="55.0" />
+      <TextArea fx:id="coupe_price_field" layoutX="546.0" layoutY="397.0" prefHeight="25.0" prefWidth="55.0" />
+      <TextArea fx:id="res_price_field" layoutX="546.0" layoutY="434.0" prefHeight="25.0" prefWidth="55.0" />
+      <TextArea fx:id="seat_price_field" layoutX="546.0" layoutY="474.0" prefHeight="25.0" prefWidth="55.0" />
       <Text layoutX="269.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Купеный" wrappingWidth="55.0" />
       <Text layoutX="269.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Плац-ный" wrappingWidth="65.0" />
       <Text layoutX="269.0" layoutY="491.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Сидячий" wrappingWidth="55.0" />

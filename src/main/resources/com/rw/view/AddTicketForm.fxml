@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="409.0" prefWidth="989.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rw.AddTicketController">
+   <children>
+      <TextField fx:id="TrainCar" layoutX="382.0" layoutY="79.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextField fx:id="SeatNum" layoutX="739.0" layoutY="79.0" prefHeight="31.0" prefWidth="226.0" />
+      <Text fill="#e11907" layoutX="385.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер вагона" wrappingWidth="81.0" />
+      <Button fx:id="adding_button" layoutX="274.0" layoutY="331.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="152.0" text="Добавить" />
+      <Button fx:id="cancel_button" layoutX="566.0" layoutY="331.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="152.0" text="Отмена" />
+      <TextField fx:id="SeatType" layoutX="376.0" layoutY="189.0" prefHeight="31.0" prefWidth="226.0" />
+      <Text fill="#e11907" layoutX="739.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер места" wrappingWidth="105.0" />
+      <Text fill="#e11907" layoutX="376.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Тип места" wrappingWidth="158.0" />
+      <Text fill="#e11907" layoutX="75.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID пассажира" wrappingWidth="158.0" />
+      <Text fill="#e11907" layoutX="68.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Код билета" wrappingWidth="158.0" />
+      <TextField fx:id="PassId" layoutX="75.0" layoutY="189.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextField fx:id="TicketCode" layoutX="68.0" layoutY="79.0" prefHeight="31.0" prefWidth="226.0" />
+      <TextField fx:id="FlightCode" layoutX="727.0" layoutY="188.0" prefHeight="31.0" prefWidth="226.0" />
+      <Text fill="#e11907" layoutX="727.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Код рейса" wrappingWidth="158.0" />
+   </children>
+</AnchorPane>

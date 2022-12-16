@@ -3,12 +3,17 @@ package com.rw;
 import com.rw.Model.User;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class SignUpController implements IDirectToWindow {
 
@@ -37,17 +42,22 @@ public class SignUpController implements IDirectToWindow {
 
 
             signUpButton.getScene().getWindow().hide();
-            openNewScene("view/SignInView.fxml");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignInView.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            SignInController someApplicationController = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("");
+            stage.show();
         });
     }
-    private void signUpNewUser() {
-        DatabaseHandler dbHandler = new DatabaseHandler();
-        String username= login_field.getText();
-        String password= password_field.getText();
-        int role= 1;
-        User user = new User(username,password,role);
-        dbHandler.signUpUser(user);
-    }
+
 
 }
 

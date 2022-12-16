@@ -31,5 +31,10 @@
                   <Font name="Georgia" size="25.0" />
               </font>
           </Label>
+      <Button fx:id="my_tickets_button" layoutX="581.0" layoutY="15.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="103.0" style="-fx-border-radius: 9;" text="Мои билеты" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Georgia" size="13.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

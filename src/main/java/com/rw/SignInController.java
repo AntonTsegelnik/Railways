@@ -1,7 +1,6 @@
 package com.rw;
 
 
-
 import java.io.*;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -15,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -40,20 +40,11 @@ public class SignInController implements IDirectToWindow {
     @FXML
     private PasswordField password_field;
 
-    private Server server;
-
+    static String CURRENT_USER;
 
 
     @FXML
     void initialize() {
-//        try{
-//            server = new Server(new ServerSocket(1234));
-//        } catch (IOException e){
-//            e.printStackTrace();
-//            System.out.println("error creating server. ");
-//        }
-
-
 
         loginSignUpButton.setOnAction(actionEvent -> {
             loginSignUpButton.getScene().getWindow().hide();
@@ -65,31 +56,73 @@ public class SignInController implements IDirectToWindow {
         });
 
         authSignInButton.setOnAction(ActionEvent -> {
-            String loginText = login_field.getText().trim();
-            String loginPassword = password_field.getText().trim();
+            var alert = new Alert(Alert.AlertType.ERROR);
 
-            var connection = new SocketConnection();
-           var result =  connection.authorize(loginText, loginPassword);
-           if(result.equals("OK")) {
-               authSignInButton.getScene().getWindow().hide();
-               openNewScene("view/FindTicket.fxml");
-           }
-           else {
-               System.out.println("Error");
-           }
-//        authSignInButton.setOnAction(ActionEvent -> {
-//            String loginText = login_field.getText().trim();
-//            String loginPassword = password_field.getText().trim();
-//           // curl -X POST -H "Content-Type: application/json" -d '{"title": "My Post1", "body": "post content", "userId": 9}' https://dummyjson.com/posts/add
-//
-//
-//            if (!loginText.equals("") && !loginPassword.equals("")) {
-//                loginUser(loginText, loginPassword);
-//            } else
-//                System.out.println("Login and password is empty");
-//
-      });
-    };
+            if (
+                    login_field.getText().isBlank() ||
+                            password_field.getText().isEmpty()
+            ) {
+                alert.setHeaderText("Заполните все поля");
+                alert.show();
+                return;
+            } else {
+
+                String loginText = login_field.getText().trim();
+                String loginPassword = password_field.getText().trim();
+
+
+                var connection = new SocketConnection();
+
+                var user = connection.authorize(loginText, loginPassword);
+
+                CURRENT_USER = user.getUsername();
+                if (CURRENT_USER != null) {
+                    if (user.getRole() == 1) {
+                        authSignInButton.getScene().getWindow().hide();
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/FindTicket.fxml"));
+                        Parent root = null;
+                        try {
+                            root = loader.load();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        FindTicketController someApplicationController = loader.getController();
+
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+                        stage.setTitle("");
+                        stage.show();
+
+                    }
+                    if (user.getRole() == 0) {
+                        authSignInButton.getScene().getWindow().hide();
+                        authSignInButton.getScene().getWindow().hide();
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AdminPanel.fxml"));
+                        Parent root = null;
+                        try {
+                            root = loader.load();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        AdminFlightPanelController someApplicationController = loader.getController();
+
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+                        stage.setTitle("");
+                        stage.show();
+
+                    }
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Пользователя не существует");
+                    alert.show();
+                    return;
+                }
+            }
+
+        });
+    }
+
 
     void openHomeScene(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignUp.fxml"));
@@ -104,28 +137,6 @@ public class SignInController implements IDirectToWindow {
 
     }
 
-
-    private void loginUser(String loginText, String loginPassword) {
-        DatabaseHandler dbHandler = new DatabaseHandler();
-        User user = new User();
-        user.setUsername(loginText);
-        user.setPassword(loginPassword);
-        ResultSet result = dbHandler.getUser(user);
-
-        int counter = 0;
-
-            try{
-            while(result.next()) {
-                counter++;
-            }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-    if(counter >= 1){
-    openNewScene("view/FindTicket.fxml");
-    }
-  }
 
 
 }
